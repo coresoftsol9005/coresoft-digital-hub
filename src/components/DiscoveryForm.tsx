@@ -102,11 +102,17 @@ export function DiscoveryForm() {
 
   const submit = () => {
     setDone(true);
+    track(Events.FormSubmit, {
+      category: data.category,
+      services: data.services.join("|"),
+      budget: data.budget,
+      city: data.city,
+    });
     confetti({ particleCount: 120, spread: 80, origin: { y: 0.4 }, colors: ["#E53935", "#0D47A1", "#90CAF9"] });
   };
 
   const waLink = `https://wa.me/918168194134?text=${encodeURIComponent(
-    `Hi CoreSoft! I just filled your discovery form.\n\nName: ${data.name}\nPhone: ${data.phone}\nBusiness: ${data.business}, ${data.city}\nCategory: ${data.category}\nServices: ${data.services.join(", ")}\nBudget: ${data.budget}`
+    `Hi CoreSoft! I just filled your discovery form.\n\nName: ${data.name}\nPhone: ${data.phone}\nWhatsApp: ${data.whatsappSame === "yes" ? data.phone : data.whatsapp}\nBusiness: ${data.business}, ${data.city}\nCategory: ${data.category}\nServices: ${data.services.join(", ")}\nGoals: ${data.goals.join(", ")}\nBudget: ${data.budget}\nNotes: ${data.notes || "—"}`
   )}`;
 
   return (
