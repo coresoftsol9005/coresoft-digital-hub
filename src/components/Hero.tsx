@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { NetworkGraph } from "./NetworkGraph";
+import { track, Events } from "@/lib/analytics";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -141,13 +142,15 @@ export function Hero() {
         >
           <a
             href="#contact"
+            onClick={() => track(Events.CtaClick, { location: "hero", label: "Get Free Audit" })}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg text-white font-bold uppercase tracking-[1.5px] text-[14px] transition-all hover:-translate-y-0.5"
             style={{ background: "var(--red)", boxShadow: "0 4px 14px rgba(229,57,53,0.35)" }}
           >
             Get Your Free Audit →
           </a>
           <a
-            href="#services"
+            href="#case-studies"
+            onClick={() => track(Events.CtaClick, { location: "hero", label: "See Our Work" })}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-lg font-bold uppercase tracking-[1.5px] text-[14px] transition-all"
             style={{
               border: "1px solid rgba(144,202,249,0.3)",

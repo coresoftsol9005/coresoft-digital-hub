@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import { track, Events } from "@/lib/analytics";
 
 interface FormState {
   name: string;
@@ -64,8 +65,23 @@ export function DiscoveryForm() {
   const [step, setStep] = useState(0);
   const [data, setData] = useState<FormState>(empty);
   const [done, setDone] = useState(false);
+  const [started, setStarted] = useState(false);
   const total = 8;
   const progress = ((step + 1) / total) * 100;
+
+  useEffect(() => {
+    if (!started && (data.name.length > 0 || step > 0)) {
+      track(Events.FormStart);
+      setStarted(true);
+    }
+  }, [started, data.name, step]);
+
+  const goNext = () => {
+    const next = Math.min(total - 1, step + 1);
+    track(Events.FormStep, { from: step + 1, to: next + 1, label: stepLabels[next] });
+    setStep(next);
+  };
+  const goBack = () => setStep((s) => Math.max(0, s - 1));
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) => setData((d) => ({ ...d, [k]: v }));
   const toggle = (k: "services" | "goals", v: string) =>
@@ -86,11 +102,17 @@ export function DiscoveryForm() {
 
   const submit = () => {
     setDone(true);
+    track(Events.FormSubmit, {
+      category: data.category,
+      services: data.services.join("|"),
+      budget: data.budget,
+      city: data.city,
+    });
     confetti({ particleCount: 120, spread: 80, origin: { y: 0.4 }, colors: ["#E53935", "#0D47A1", "#90CAF9"] });
   };
 
   const waLink = `https://wa.me/918168194134?text=${encodeURIComponent(
-    `Hi CoreSoft! I just filled your discovery form.\n\nName: ${data.name}\nPhone: ${data.phone}\nBusiness: ${data.business}, ${data.city}\nCategory: ${data.category}\nServices: ${data.services.join(", ")}\nBudget: ${data.budget}`
+    `Hi CoreSoft! I just filled your discovery form.\n\nName: ${data.name}\nPhone: ${data.phone}\nWhatsApp: ${data.whatsappSame === "yes" ? data.phone : data.whatsapp}\nBusiness: ${data.business}, ${data.city}\nCategory: ${data.category}\nServices: ${data.services.join(", ")}\nGoals: ${data.goals.join(", ")}\nBudget: ${data.budget}\nNotes: ${data.notes || "—"}`
   )}`;
 
   return (

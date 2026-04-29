@@ -1,12 +1,12 @@
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
+import { track, Events } from "@/lib/analytics";
 
 interface Tier {
   name: string;
   badge: string;
   badgeTone: "navy" | "red" | "muted";
-  price: string;
-  retainer: string;
+  tagline: string;
   features: { text: string; included: boolean }[];
   recommended?: boolean;
 }
@@ -16,8 +16,7 @@ const tiers: Tier[] = [
     name: "Starter",
     badge: "Best to Begin",
     badgeTone: "muted",
-    price: "₹4,999",
-    retainer: "+ ₹999/month optional retainer",
+    tagline: "Perfect for small shops getting online for the first time.",
     features: [
       { text: "4-Page Professional Website", included: true },
       { text: "Google My Business Setup", included: true },
@@ -32,8 +31,7 @@ const tiers: Tier[] = [
     name: "Growth",
     badge: "⚡ Most Popular",
     badgeTone: "red",
-    price: "₹9,999",
-    retainer: "+ ₹1,999/month retainer",
+    tagline: "For growing businesses ready to dominate local search.",
     recommended: true,
     features: [
       { text: "8-Page Premium Website", included: true },
@@ -49,8 +47,7 @@ const tiers: Tier[] = [
     name: "Complete",
     badge: "Maximum Impact",
     badgeTone: "navy",
-    price: "₹18,999",
-    retainer: "+ ₹3,499/month retainer",
+    tagline: "Full-stack digital takeover with dedicated account manager.",
     features: [
       { text: "Everything in Growth +", included: true },
       { text: "Full WhatsApp Automation", included: true },
@@ -71,21 +68,24 @@ const badgeBg = (t: Tier["badgeTone"]) => {
 
 export function Pricing() {
   return (
-    <section className="py-24 md:py-32" style={{ background: "var(--dark-bg)" }}>
+    <section id="pricing" className="py-24 md:py-32" style={{ background: "var(--dark-bg)" }}>
       <div className="container-x">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span
             className="eyebrow inline-flex items-center gap-2 px-3 py-1 rounded-full"
             style={{ background: "rgba(144,202,249,0.1)", color: "#90CAF9" }}
           >
-            <span style={{ color: "var(--red)" }}>●</span> Transparent Pricing
+            <span style={{ color: "var(--red)" }}>●</span> Tailored Plans
           </span>
           <h2
             className="mt-5 font-black text-white"
             style={{ fontSize: "clamp(32px, 4vw, 52px)", letterSpacing: "-1px", lineHeight: 1.1 }}
           >
-            No Hidden Fees. No Long Contracts. No BS.
+            Three Plans. Custom Quotes. Zero Surprises.
           </h2>
+          <p className="mt-4 text-base md:text-lg" style={{ color: "var(--mid-blue)" }}>
+            Every business is different — tell us your goals and we'll send a personalised quote within 30 minutes.
+          </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6 items-stretch">
@@ -115,15 +115,17 @@ export function Pricing() {
               <h3 className="mt-4 text-[13px] font-bold uppercase tracking-[2px]" style={{ color: "#90CAF9" }}>
                 {t.name}
               </h3>
-              <div className="mt-3 font-black text-white" style={{ fontSize: 44, letterSpacing: "-1.5px" }}>
-                {t.price}
-                <span className="text-base font-medium ml-1" style={{ color: "var(--mid-blue)" }}>one-time</span>
-              </div>
-              <div className="mt-1 text-[13px]" style={{ color: "var(--mid-blue)" }}>{t.retainer}</div>
+              <p className="mt-3 text-[15px] leading-relaxed" style={{ color: "#E3F0FF" }}>
+                {t.tagline}
+              </p>
 
               <ul className="mt-7 space-y-3 flex-1">
                 {t.features.map((f, k) => (
-                  <li key={k} className="flex items-start gap-3 text-[14px]" style={{ color: f.included ? "#E3F0FF" : "var(--mid-blue)" }}>
+                  <li
+                    key={k}
+                    className="flex items-start gap-3 text-[14px]"
+                    style={{ color: f.included ? "#E3F0FF" : "var(--mid-blue)" }}
+                  >
                     {f.included ? (
                       <Check size={18} style={{ color: "var(--red)", flexShrink: 0, marginTop: 1 }} />
                     ) : (
@@ -136,6 +138,9 @@ export function Pricing() {
 
               <a
                 href="#contact"
+                onClick={() =>
+                  track(Events.QuoteRequest, { plan: t.name, location: "pricing_card" })
+                }
                 className="mt-8 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-bold uppercase tracking-[1.5px] text-[13px] transition-all hover:-translate-y-0.5"
                 style={
                   t.recommended
@@ -143,21 +148,26 @@ export function Pricing() {
                     : { border: "1px solid #90CAF9", color: "#90CAF9", background: "transparent" }
                 }
               >
-                Get Started →
+                Get Quote →
               </a>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-10 flex flex-col items-center gap-4">
-          <a href="#contact" className="text-[14px] underline-offset-4 hover:underline" style={{ color: "#90CAF9" }}>
+          <a
+            href="#contact"
+            onClick={() => track(Events.QuoteRequest, { plan: "unsure", location: "pricing_footer" })}
+            className="text-[14px] underline-offset-4 hover:underline"
+            style={{ color: "#90CAF9" }}
+          >
             Not sure which plan? Get a free personalised recommendation →
           </a>
           <span
             className="text-[11px] font-bold uppercase tracking-[1.5px] px-3 py-1.5 rounded-full text-white"
             style={{ background: "var(--red)" }}
           >
-            EMI Available — 0% for 3 months on all plans
+            Flexible payments · EMI available on all plans
           </span>
         </div>
       </div>
