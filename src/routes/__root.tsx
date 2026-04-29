@@ -33,6 +33,14 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { title: "CoreSoft Solutions" },
+      { property: "og:title", content: "CoreSoft Solutions" },
+      { name: "twitter:title", content: "CoreSoft Solutions" },
+      { name: "description", content: "CoreSoft Digital Hub is a marketing website for a digital agency that helps local businesses get online." },
+      { property: "og:description", content: "CoreSoft Digital Hub is a marketing website for a digital agency that helps local businesses get online." },
+      { name: "twitter:description", content: "CoreSoft Digital Hub is a marketing website for a digital agency that helps local businesses get online." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0cea6ea0-548a-44f7-9d62-59be83b23e17/id-preview-01f28124--ac038aa0-3c05-4eaf-9ad0-0e03ec85e074.lovable.app-1777452229112.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0cea6ea0-548a-44f7-9d62-59be83b23e17/id-preview-01f28124--ac038aa0-3c05-4eaf-9ad0-0e03ec85e074.lovable.app-1777452229112.png" },
     ],
     links: [
       {
