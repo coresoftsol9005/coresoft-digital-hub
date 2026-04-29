@@ -1,26 +1,56 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Nav } from "@/components/Nav";
+import { Hero } from "@/components/Hero";
+import { SocialProofBar, TrustRibbon } from "@/components/SocialProofBar";
+import { Services } from "@/components/Services";
+import { Results } from "@/components/Results";
+import { HowItWorks } from "@/components/HowItWorks";
+import { WhoWeHelp } from "@/components/WhoWeHelp";
+import { Testimonials } from "@/components/Testimonials";
+import { Pricing } from "@/components/Pricing";
+import { DiscoveryForm } from "@/components/DiscoveryForm";
+import { Footer } from "@/components/Footer";
+import { WhatsAppFAB, MobileStickyBar } from "@/components/WhatsAppFAB";
 
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "CoreSoft Solutions — Hisar Ka Digital Partner | Websites in 7 Days" },
+      {
+        name: "description",
+        content:
+          "CoreSoft Solutions builds websites, runs social media, sets up Google My Business, and automates WhatsApp for Haryana's restaurants, salons, clinics & retail shops. Free audit in 30 minutes.",
+      },
+      { property: "og:title", content: "CoreSoft Solutions — Haryana Ka Digital Partner" },
+      {
+        property: "og:description",
+        content:
+          "Websites · Social Media · Digital Menus · Automations. 150+ Haryana businesses served. Free 5-minute audit, WhatsApp reply in 30 minutes.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
+function Home() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <main style={{ background: "var(--off-white)" }}>
+      <Nav />
+      <Hero />
+      <TrustRibbon />
+      <SocialProofBar />
+      <Services />
+      <Results />
+      <HowItWorks />
+      <WhoWeHelp />
+      <Testimonials />
+      <Pricing />
+      <DiscoveryForm />
+      <Footer />
+      <WhatsAppFAB />
+      <MobileStickyBar />
+    </main>
   );
-}
-
-function Index() {
-  return <PlaceholderIndex />;
 }
