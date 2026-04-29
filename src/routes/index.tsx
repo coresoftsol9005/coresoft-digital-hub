@@ -4,6 +4,7 @@ import { Hero } from "@/components/Hero";
 import { SocialProofBar, TrustRibbon } from "@/components/SocialProofBar";
 import { Services } from "@/components/Services";
 import { Results } from "@/components/Results";
+import { CaseStudies } from "@/components/CaseStudies";
 import { HowItWorks } from "@/components/HowItWorks";
 import { WhoWeHelp } from "@/components/WhoWeHelp";
 import { Testimonials } from "@/components/Testimonials";
@@ -43,6 +44,7 @@ function Home() {
       <SocialProofBar />
       <Services />
       <Results />
+      <CaseStudies />
       <HowItWorks />
       <WhoWeHelp />
       <Testimonials />

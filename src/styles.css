@@ -213,3 +213,10 @@
   background-image: radial-gradient(rgba(144,202,249,0.18) 1px, transparent 1px);
   background-size: 28px 28px;
 }
+
+/* Mobile menu slide-in */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0.4; }
+  to   { transform: translateX(0); opacity: 1; }
+}
+
