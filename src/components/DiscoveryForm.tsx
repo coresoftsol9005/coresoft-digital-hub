@@ -273,7 +273,7 @@ export function DiscoveryForm() {
                 <div className="mt-6 flex items-center justify-between gap-3">
                   <button
                     disabled={step === 0}
-                    onClick={() => setStep((s) => Math.max(0, s - 1))}
+                    onClick={goBack}
                     className="px-5 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-[1.5px] transition-all disabled:opacity-30 disabled:cursor-not-allowed"
                     style={{ border: "1px solid rgba(144,202,249,0.3)", color: "#90CAF9", background: "transparent" }}
                   >
@@ -282,7 +282,7 @@ export function DiscoveryForm() {
                   {step < total - 1 ? (
                     <button
                       disabled={!canNext()}
-                      onClick={() => setStep((s) => s + 1)}
+                      onClick={goNext}
                       className="px-6 py-2.5 rounded-lg text-[13px] font-bold uppercase tracking-[1.5px] text-white transition-all hover:-translate-y-0.5 disabled:opacity-40 disabled:cursor-not-allowed disabled:transform-none"
                       style={{ background: "var(--red)" }}
                     >
@@ -332,6 +332,7 @@ export function DiscoveryForm() {
                   href={waLink}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track(Events.FormWhatsAppOpen, { category: data.category })}
                   className="mt-6 inline-flex items-center justify-center gap-2 px-7 py-3 rounded-lg text-white font-bold uppercase tracking-[1.5px] text-[13px] transition-all hover:-translate-y-0.5"
                   style={{ background: "var(--whatsapp)" }}
                 >
