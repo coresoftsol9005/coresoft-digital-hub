@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { track, Events } from "@/lib/analytics";
 
 export function WhatsAppFAB() {
   return (
@@ -7,6 +8,7 @@ export function WhatsAppFAB() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
+      onClick={() => track(Events.WhatsAppClick, { location: "fab" })}
       className="fixed bottom-6 right-6 z-[60] w-14 h-14 rounded-full flex items-center justify-center fab-pulse transition-transform hover:scale-110"
       style={{ background: "var(--whatsapp)", color: "#fff" }}
     >
@@ -30,13 +32,12 @@ export function MobileStickyBar() {
       style={{ background: "var(--dark-bg)", borderTop: "1px solid rgba(144,202,249,0.1)" }}
     >
       <a
-        href="https://wa.me/918168194134"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="#contact"
+        onClick={() => track(Events.CtaClick, { location: "mobile_sticky", label: "Get Free Audit" })}
         className="flex items-center justify-center gap-2 w-full py-3 rounded-lg text-white font-bold uppercase tracking-[1.5px] text-[13px]"
         style={{ background: "var(--red)" }}
       >
-        💬 Get a Free Audit — WhatsApp Now
+        💬 Get Your Free Audit Now →
       </a>
     </div>
   );
